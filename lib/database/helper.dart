@@ -1,9 +1,8 @@
 import 'package:path/path.dart';
+import 'package:settimenu/utils/costants.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
-  static const int dbVersion = 1;
-
   DatabaseHelper._privateConstructor();
 
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
@@ -23,7 +22,7 @@ class DatabaseHelper {
   Future<Database> _initDatabase() async {
     print("DATABASE HELPER - _initDatabase");
 
-    String path = join(await getDatabasesPath(), 'settimenu.db');
+    String path = join(await getDatabasesPath(), kDatabaseName);
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
@@ -61,5 +60,22 @@ class DatabaseHelper {
         description TEXT
       )
     ''');
+  }
+
+  Future<Map<String, List<Map<String, dynamic>>>> queryAllTablesData() async {
+    final db = await instance.database;
+    final tablesQuery = await db.rawQuery(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';",
+    );
+
+    Map<String, List<Map<String, dynamic>>> data = {};
+
+    for (var table in tablesQuery) {
+      final tableName = table['name'] as String;
+      final tableData = await db.query(tableName);
+      data[tableName] = tableData;
+    }
+
+    return data;
   }
 }

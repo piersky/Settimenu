@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:settimenu/ui/debug.dart';
+import 'package:settimenu/ui/menus.dart';
+import 'package:settimenu/ui/settings.dart';
+import 'package:settimenu/utils/costants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common/fan_effect.dart';
+import 'database/database_data.dart';
 import 'database/helper.dart';
 
 Future<bool> isDatabaseCreated() async {
   final prefs = await SharedPreferences.getInstance();
-  return prefs.getBool('db_created') ?? false;
+  return prefs.getBool(kDatabaseCreated) ?? false;
 }
 
 Future<void> setDatabaseCreated() async {
   final prefs = await SharedPreferences.getInstance();
-  await prefs.setBool('db_created', true);
+  await prefs.setBool(kDatabaseCreated, true);
 }
 
 Future<void> main() async {
@@ -32,11 +37,17 @@ class Settimenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Settimenu',
+      title: kAppName,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const FanEffectScreen(),
+      routes: {
+        SettingsUI.id: (context) => const SettingsUI(),
+        DebugUI.id: (context) => const DebugUI(),
+        DatabaseDataUI.id: (context) => const DatabaseDataUI(),
+        MenusUI.id: (context) => const MenusUI(),
+      },
     );
   }
 }

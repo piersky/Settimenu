@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:settimenu/ui/menus.dart';
 
 import '../ui/card_day.dart';
 import '../ui/settings.dart';
@@ -63,16 +65,49 @@ class _FanEffectScreenState extends State<FanEffectScreen>
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settimenu'),
+        centerTitle: true,
+        title: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            value: 'menu',
+            dropdownColor: Colors.orangeAccent,
+            iconEnabledColor: Colors.white,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+            items: const [
+              DropdownMenuItem(value: 'menu', child: Text('Menu')),
+              DropdownMenuItem(value: 'altro', child: Text('Altro')),
+            ],
+            onChanged: (value) {
+              if (value == 'menu') {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Hai selezionato Menu')),
+                );
+              } else if (value == 'altro') {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Hai selezionato Altro')),
+                );
+              }
+            },
+          ),
+        ),
         backgroundColor: Colors.orangeAccent,
+        leading: IconButton(
+          icon: const Icon(Icons.settings),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SettingsUI()),
+            );
+          },
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings),
+            icon: Icon(FontAwesomeIcons.calendarPlus),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SettingsUI()),
-              );
+              Navigator.pushNamed(context, MenusUI.id);
             },
           ),
         ],
