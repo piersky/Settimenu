@@ -1,0 +1,16 @@
+{
+  "monday": "Lunedì",
+  "tuesday": "Martedì",
+  "wednesday": "Mercoledì",
+  "thursday": "Giovedì",
+  "friday": "Venerdì",
+  "saturday": "Sabato",
+  "sunday": "Domenica",
+  "breakfast": "Colazione",
+  "brunch": "Brunch",
+  "lunch": "Pranzo",
+  "dinner": "Cena",
+  "snack": "Snack",
+  "meal": "Pasto",
+  "meal_plan": "Piano dei pasti"
+}

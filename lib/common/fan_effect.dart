@@ -61,7 +61,7 @@ class _FanEffectScreenState extends State<FanEffectScreen>
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     const cardWidth = 200.0;
-    const cardHeight = 200.0;
+    const cardHeight = 160.0;
 
     return Scaffold(
       appBar: AppBar(
@@ -93,7 +93,17 @@ class _FanEffectScreenState extends State<FanEffectScreen>
             },
           ),
         ),
-        backgroundColor: Colors.orangeAccent,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.orangeAccent, Colors.pinkAccent],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
+          ),
+        ),
+        backgroundColor: Colors.transparent, // per far vedere il gradient
+        elevation: 0, // opzionale, per un look più piatto
         leading: IconButton(
           icon: const Icon(Icons.settings),
           onPressed: () {
@@ -120,9 +130,9 @@ class _FanEffectScreenState extends State<FanEffectScreen>
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.yellow, Colors.orangeAccent],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                  colors: [Colors.orangeAccent, Colors.pinkAccent],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
                 ),
               ),
               child: PageView.builder(
@@ -157,29 +167,48 @@ class _FanEffectScreenState extends State<FanEffectScreen>
                                 height: cardHeight,
                                 child: Card(
                                   elevation: 4,
-                                  color:
-                                      Colors.primaries[index %
-                                          Colors.primaries.length],
-                                  child: InkWell(
-                                    onTap: () {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'Hai tappato la Card ${index + 1}',
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Stack(
+                                      fit: StackFit.expand,
+                                      children: [
+                                        Image.asset(
+                                          'images/table_${index + 1}.jpg',
+                                          fit: BoxFit.cover,
+                                        ),
+                                        Container(
+                                          color: Colors.black.withOpacity(0.3),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            print(
+                                              "Cliccato sulla Card ${index + 1}",
+                                            );
+                                            ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Hai cliccato sulla Card ${index + 1}',
+                                                ),
+                                                duration: const Duration(
+                                                  seconds: 2,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: Center(
+                                            child: Text(
+                                              'Card ${index + 1}',
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      );
-                                    },
-                                    child: Center(
-                                      child: Text(
-                                        'Card ${index + 1}',
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                        ),
-                                      ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -199,7 +228,7 @@ class _FanEffectScreenState extends State<FanEffectScreen>
             "Current Page: ${WeekDays.values[_currentPage.toInt().clamp(0, WeekDays.values.length - 1)]}",
           ),
           const SizedBox(height: 20),
-          CardDayUI(daySelected: _currentPage.toInt()),
+          Expanded(child: CardDayUI(daySelected: _currentPage.toInt())),
         ],
       ),
     );

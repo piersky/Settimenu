@@ -1,0 +1,16 @@
+{
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+  "breakfast": "Breakfast",
+  "brunch": "Brunch",
+  "lunch": "Lunch",
+  "dinner": "Dinner",
+  "snack": "Snack",
+  "meal": "Meal",
+  "meal_plan": "Meal Plan"
+}

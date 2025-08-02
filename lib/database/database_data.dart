@@ -32,9 +32,7 @@ class DatabaseDataUI extends StatelessWidget {
                   ),
                   children: tableData.map((row) {
                     return ListTile(
-                      title: Text(
-                        "${row['name']?.toString() ?? 'No name'} - ${row['zone_iso']?.toString() ?? ''}",
-                      ),
+                      title: Text(row['name']?.toString() ?? 'No name'),
                       subtitle: Text(
                         row.entries
                             .where((e) => e.key != 'name')
